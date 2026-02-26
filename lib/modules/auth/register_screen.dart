@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../app/routes/app_routes.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final phoneController = TextEditingController();
     final passwordController = TextEditingController();
+    final confirmController = TextEditingController();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
+      appBar: AppBar(title: const Text("Register")),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -33,28 +34,31 @@ class LoginScreen extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
+            const SizedBox(height: 20),
+            TextField(
+              controller: confirmController,
+              obscureText: true,
+              decoration: const InputDecoration(
+                labelText: "Confirm Password",
+                border: OutlineInputBorder(),
+              ),
+            ),
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                if (phoneController.text.isNotEmpty &&
-                    passwordController.text.isNotEmpty) {
-                  Get.offNamed(Routes.home);
+                if (passwordController.text ==
+                    confirmController.text &&
+                    phoneController.text.isNotEmpty) {
+                  Get.offNamed(Routes.login);
                 } else {
                   Get.snackbar(
                     "Error",
-                    "All fields are required",
+                    "Passwords do not match",
                     snackPosition: SnackPosition.BOTTOM,
                   );
                 }
               },
-              child: const Text("Login"),
-            ),
-            const SizedBox(height: 10),
-            TextButton(
-              onPressed: () {
-                Get.toNamed(Routes.register);
-              },
-              child: const Text("Don't have account? Register"),
+              child: const Text("Register"),
             ),
           ],
         ),
